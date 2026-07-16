@@ -2,11 +2,23 @@
 
 An interactive AI-powered clinical case simulator built specifically for Sri Lankan medical students preparing for their **Final MBBS Clinical Examinations** (Long Cases and Short Cases).
 
-The simulator uses **Streamlit** for the UI and the **Google GenAI SDK** (Gemini) to dynamically model patient scenarios and senior examiner assessments — grounded in local Sri Lankan ward settings and the undergraduate clinical syllabus.
+The simulator uses **Streamlit** for the UI and the **Google GenAI SDK** (`gemini-3.1-flash-lite`) to dynamically model patient scenarios and senior examiner assessments — grounded in local Sri Lankan ward settings and the undergraduate clinical syllabus.
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
+
+### 🎙️ Hands-Free Voice-to-Text Input (New!)
+- **Native Browser Integration:** Uses the browser's native Web Speech API embedded directly inside the chat input box.
+- **Multilingual Recognition:** Speak in **Sinhala**, **Singlish**, or **English**. The browser instantly transcribes your speech.
+- **Auto-Submit:** When you finish speaking, the simulator automatically submits your question to the patient. No need to click "Send" or press Enter!
+- **Blazing Fast Text Responses:** The AI patient responds immediately in text format (no slow audio-generation overhead).
+
+### 🗣️ Multilingual Patient Engine
+The patient dynamically mirrors your language based on your input:
+- Speak/type in **Sinhala script** (e.g., *"මොකද අමාරුව?"*) → Patient replies in colloquial Sinhala script.
+- Speak/type in **Singlish** (e.g., *"mokada amaruwa?"*) → Patient replies in natural Singlish.
+- Speak/type in **English** → Patient replies in English with a realistic Sri Lankan persona.
 
 ### 📚 Syllabus-Aligned Case Directory
 Randomly selects cases from **8 exam categories** spanning the full Final MBBS clinical syllabus:
@@ -26,48 +38,31 @@ Randomly selects cases from **8 exam categories** spanning the full Final MBBS c
 
 ---
 
-### 🤖 Dual-Phase AI Simulation Engine
+## 🤖 Dual-Phase AI Simulation Engine
 
 #### Phase 1 — Patient Simulation (`PATIENT_SIM`)
 - The AI plays a patient admitted to a local Sri Lankan Teaching Hospital ward.
-- Responds **strictly in Sinhala script** using authentic colloquial ward language  
-  (e.g., *"බඩ රිදෙනවා"*, *"හුස්ම ගන්න අමාරුයි"*, *"ක්ලිනික් කාඩ් එක ගෙනාවා"*).
-- Adapts all symptom responses to fit the assigned hidden diagnosis.
+- Adapts all symptom responses to fit the assigned hidden diagnosis without ever revealing the medical terminology.
 - Maintains **full conversational context** across the entire history-taking session.
 
 #### Phase 2 — Examiner Review (`EXAMINER_REVIEW`)
 - Triggered by typing **`done`** in the chat input.
-- The AI transforms into a **Senior Consultant Physician & University External Examiner**.
-- Evaluates **only the questions the student asked** (patient replies are hidden from the evaluator) — so the report reflects the student's own clinical reasoning, not the patient's story.
+- Evaluates **only the questions the student asked** (patient replies are hidden from the evaluator) to accurately assess clinical reasoning.
 - Provides a structured English-language critique covering:
-  - Presenting Complaint (PC) coverage
-  - History of Presenting Complaint (HPC) depth
-  - Past Medical / Drug / Allergy / Social / Family history gaps
-  - **Clinical omissions** specific to the hidden diagnosis
-  - Prompts for **Differential Diagnoses**
-  - Expected **physical signs** on bedside examination
-- After the initial report, continues as an **interactive viva** — the examiner responds to each of the student's answers and probes further.
-
-#### Guard Rails
-- If the student types `done` without asking any questions first, they receive a warning and are returned to the patient interview.
+  - Presenting Complaint (PC) & History of Presenting Complaint (HPC) depth.
+  - Past Medical / Drug / Social history gaps.
+  - **Clinical omissions** specific to the hidden diagnosis.
+  - Prompts for **Differential Diagnoses** and expected **physical signs**.
+- Continues as an **interactive viva** — the examiner responds to the student's answers and probes further.
 
 ---
 
-### 📊 History Metrics Card (Sidebar)
-- Live counter of questions asked during the session.
-- Animated colour-coded progress bar (🟠 orange → 🟢 green) that turns green once ≥ 5 questions have been asked.
-- Hint prompt reminding the student to type `done` when ready.
-
----
-
-### 🎨 UI / UX
+## 🎨 UI / UX
 - Dark glassmorphic theme with orange-and-green Sri Lankan colour accents.
 - *Plus Jakarta Sans* Google Font typography.
 - Animated pulsing stethoscope emblem in the sidebar.
-- Chat messages clearly labelled by speaker role:
-  - 🩺 **PATIENT (රෝගියා)**
-  - 🎓 **EXTERNAL EXAMINER (විභාග පරීක්ෂක)**
-- **Next Random Case** button cycles across all 8 exam categories.
+- Integrated, sleek microphone button for voice input natively inside the text box.
+- History Metrics Card tracks progress and ensures you ask at least 5 questions before submitting to the examiner.
 
 ---
 
@@ -75,10 +70,12 @@ Randomly selects cases from **8 exam categories** spanning the full Final MBBS c
 
 | Component | Technology |
 |---|---|
-| Framework | [Streamlit](https://streamlit.io/) |
-| AI Model | `gemini-3.1-flash-lite` via [Google GenAI SDK](https://github.com/googleapis/python-genai) |
-| Language | Python 3.9+ |
+| Framework | [Streamlit](https://streamlit.io/) >= 1.31 |
+| AI Model | `gemini-3.1-flash-lite` via `google-genai` SDK |
+| Voice Input| Web Speech API (`webkitSpeechRecognition`) injected via JS |
 | Styling | Vanilla CSS (glassmorphism, animations) |
+
+*(Note: `gTTS` and audio-playback dependencies have been completely removed to prioritize speed and stability).*
 
 ---
 
@@ -101,9 +98,6 @@ Create `.streamlit/secrets.toml` (already listed in `.gitignore`):
 GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
 ```
 
-> [!NOTE]
-> Get a free Gemini API key from [Google AI Studio](https://aistudio.google.com/).
-
 ### 4. Run the App
 ```bash
 streamlit run app.py
@@ -112,34 +106,12 @@ App opens at `http://localhost:8501`.
 
 ---
 
-## 📂 Project Structure
-
-```text
-cases/
-├── .streamlit/
-│   └── secrets.toml      # Local secrets — API key (git-ignored)
-├── .gitignore
-├── app.py                # Main Streamlit app — all simulation logic
-├── requirements.txt      # Python dependencies
-└── README.md             # Project documentation
-```
-
----
-
 ## 📝 How to Use
 
 1. Open `http://localhost:8501` in your browser.
 2. The **Exam Type** and **System/Station** are shown in the sidebar. The diagnosis is hidden.
-3. Ask history-taking questions in **Sinhala** (e.g., *"කෑස්ස කොපමණ කලක් ඉඳල ද?"*, *"රාත්‍රියේ දහඩිය දේ ද?"*).
+3. **Click the Microphone** in the chat bar and speak your question in Sinhala/Singlish/English. The app will auto-transcribe and submit it instantly. Alternatively, you can type your questions.
 4. Watch the **History Metrics** bar — aim for at least 5 comprehensive questions.
 5. When ready, type **`done`** and press Enter to call the examiner.
 6. Read the **Examiner Report**, then answer the viva questions interactively.
 7. Click **🔄 Next Random Case** in the sidebar to start a fresh simulation.
-
----
-
-## ⚠️ Known Limitations
-
-- The simulator evaluates history-taking only — physical examination and investigation interpretation are not currently simulated.
-- Responses are in Sinhala script. Students using other regional languages will need to adapt their input.
-- API availability depends on Google GenAI service uptime.
