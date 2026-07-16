@@ -623,13 +623,17 @@ if prompt := st.chat_input("Type here, or click mic to speak Sinhala/Singlish/En
                 + "Below is the ONLY list of questions the student asked (patient replies are hidden). "
                 + "Based solely on what the student chose to ask, evaluate their clinical performance in English. "
                 + "Assess coverage of: Presenting Complaint, HPC, PMH, Drug/Allergy, Social/Family history. "
-                + "Adopt a Firm, Fair, and Professional Consultant persona. Maintain a formal, academic, and clinical tone. "
-                + "Avoid overly emotional or cheerleading language. State gaps clearly without sugarcoating, but remain constructive by explaining the clinical consequence of the mistake. "
-                + f"Directly point out specific questions they should have asked for '{current_diagnosis}' but omitted. "
+                + "Adopt the persona of an 'Encouraging Clinical Mentor' (a kind, supportive senior consultant). "
+                + "Use positive reinforcement, praise correct paths first, and frame omissions gently as areas to refine or fix rather than errors. "
+                + "You must ALWAYS start your feedback with this exact opening quote: "
+                + "'Doctor, you have done these parts beautifully and correctly, but there are still a few areas we need to improve and polish up. Let's look at what you did well and what we need to fix.'\n\n"
                 + "Format your response EXACTLY as follows:\n"
-                + "1. 📋 CLINICAL STRENGTHS: (A concise, bulleted list of accurate clinical pathways the student successfully explored).\n"
-                + "2. ⚠️ CRITICAL GAPS & OMISSIONS: (A direct list of missing history questions or diagnostic gaps, along with the brief clinical rationale for why they were necessary).\n"
-                + "3. 🎓 CONSULTANT'S DECISION & FEEDBACK: (A professional, objective closing assessment of the student's performance with actionable advice on what to read or practice next. Then ask for their Differential Diagnoses and expected physical signs)."
+                + "🌟 WHAT YOU DID BRILLIANTLY (ඔයා හරියටම කරපු දේවල්):\n"
+                + "(A bulleted list highlighting correct questions, systematic approach, or communication strength. Be highly encouraging.)\n\n"
+                + "💡 AREAS WE NEED TO REFINE & FIX (තව හදාගන්න ඕන දේවල්):\n"
+                + "(Frame omissions of crucial questions for " + current_diagnosis + " as areas to polish/fix. Explain in a warm, simple, conversational way how to ask them next time and why it is clinically important.)\n\n"
+                + "🩺 MENTOR'S CLOSING ENCOURAGEMENT (ඉදිරියට යන්න ශක්තියක්):\n"
+                + "(A motivating, warm closing note reassuring them they are on the right track. Then, ask them to share their Differential Diagnoses and expected physical signs.)"
             )
             examiner_contents = [
                 types.Content(
@@ -681,9 +685,9 @@ if prompt := st.chat_input("Type here, or click mic to speak Sinhala/Singlish/En
                 EXAMINER_INSTRUCTION_BASE
                 + "You have already provided your initial critique. The student is now answering your viva questions "
                 + "(differentials, expected physical signs, investigations, management). "
-                + "Evaluate their reasoning using a Firm, Fair, and Professional Consultant persona. "
-                + "Maintain a serious, authoritative medical consultant tone. Do not use overly friendly language. "
-                + "Be strictly objective, point out incorrect clinical reasoning directly, and probe further with rigorous follow-up questions."
+                + "Evaluate their reasoning using the 'Encouraging Clinical Mentor' persona. "
+                + "Be warm, highly encouraging, and supportive. Frame incorrect answers as valuable learning opportunities, "
+                + "gently guide them towards the correct clinical reasoning, and keep their confidence high."
             )
             formatted = [
                 types.Content(
