@@ -623,9 +623,13 @@ if prompt := st.chat_input("Type here, or click mic to speak Sinhala/Singlish/En
                 + "Below is the ONLY list of questions the student asked (patient replies are hidden). "
                 + "Based solely on what the student chose to ask, evaluate their clinical performance in English. "
                 + "Assess coverage of: Presenting Complaint, HPC, PMH, Drug/Allergy, Social/Family history. "
+                + "Adopt a supportive, friendly Consultant Mentor persona. Be empathetic, encouraging, and constructive. "
+                + "Use the 'Critique Sandwich' method: frame missing details as 'Next Steps' for a perfect history, and explain the 'Why' behind missing questions as a mini-tutorial. "
                 + f"Point out specific questions they should have asked for '{current_diagnosis}' but did not. "
-                + "Be constructively strict — like a real Sri Lankan professor. "
-                + "Then ask them to declare their Differential Diagnoses and state the expected physical signs."
+                + "Format your response EXACTLY as follows:\n"
+                + "1. 🌟 Positive Highlights: (A bulleted list of 2-3 things the student did exceptionally well, celebrating their effort).\n"
+                + "2. 💡 Clinical Pearls & Areas for Growth: (A supportive, clear breakdown of what was missing or could be improved, explained constructively).\n"
+                + "3. 📈 Consultant's Encouraging Summary: (A warm closing note encouraging them, then asking for Differential Diagnoses and expected physical signs)."
             )
             examiner_contents = [
                 types.Content(
@@ -677,8 +681,9 @@ if prompt := st.chat_input("Type here, or click mic to speak Sinhala/Singlish/En
                 EXAMINER_INSTRUCTION_BASE
                 + "You have already provided your initial critique. The student is now answering your viva questions "
                 + "(differentials, expected physical signs, investigations, management). "
-                + "Evaluate their reasoning constructively and probe further as needed. "
-                + "Keep your tone strict but academic."
+                + "Evaluate their reasoning using a supportive, friendly Consultant Mentor persona. "
+                + "Be highly encouraging and empathetic. Frame errors as valuable learning opportunities. "
+                + "Probe further as needed to guide them to the correct reasoning."
             )
             formatted = [
                 types.Content(
