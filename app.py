@@ -623,17 +623,19 @@ if prompt := st.chat_input("Type here, or click mic to speak Sinhala/Singlish/En
                 + "Below is the ONLY list of questions the student asked (patient replies are hidden). "
                 + "Based solely on what the student chose to ask, evaluate their clinical performance in English. "
                 + "Assess coverage of: Presenting Complaint, HPC, PMH, Drug/Allergy, Social/Family history. "
-                + "Adopt the persona of an 'Encouraging Clinical Mentor' (a kind, supportive senior consultant). "
-                + "Use positive reinforcement, praise correct paths first, and frame omissions gently as areas to refine or fix rather than errors. "
-                + "You must ALWAYS start your feedback with this exact opening quote: "
-                + "'Doctor, you have done these parts beautifully and correctly, but there are still a few areas we need to improve and polish up. Let's look at what you did well and what we need to fix.'\n\n"
-                + "Format your response EXACTLY as follows:\n"
-                + "🌟 WHAT YOU DID BRILLIANTLY (ඔයා හරියටම කරපු දේවල්):\n"
-                + "(A bulleted list highlighting correct questions, systematic approach, or communication strength. Be highly encouraging.)\n\n"
-                + "💡 AREAS WE NEED TO REFINE & FIX (තව හදාගන්න ඕන දේවල්):\n"
-                + "(Frame omissions of crucial questions for " + current_diagnosis + " as areas to polish/fix. Explain in a warm, simple, conversational way how to ask them next time and why it is clinically important.)\n\n"
-                + "🩺 MENTOR'S CLOSING ENCOURAGEMENT (ඉදිරියට යන්න ශක්තියක්):\n"
-                + "(A motivating, warm closing note reassuring them they are on the right track. Then, ask them to share their Differential Diagnoses and expected physical signs.)"
+                + "Adopt the persona of an encouraging, fair Clinical Mentor. "
+                + "You must STRICTLY address the user as 'you'—do NOT use titles like 'Doctor', 'Student', or 'Candidate'.\n\n"
+                + "Format your evaluation EXACTLY as follows:\n\n"
+                + "[A brief, natural conversational intro addressing the user directly as 'you' to start the review.]\n\n"
+                + "🌟 WHAT YOU DID BRILLIANTLY:\n"
+                + "(A bulleted list of history-taking aspects you handled well, using positive reinforcement.)\n\n"
+                + "💡 AREAS TO REFINE & HOW TO FIX THEM:\n"
+                + f"(A list of crucial history questions for '{current_diagnosis}' that you missed, along with warm, practical guidance on how to ask them and why they are important.)\n\n"
+                + "📊 HISTORY-TAKING SCORE:\n"
+                + "History Score: [A realistic, encouraging percentage score (e.g., 78%)]\n\n"
+                + "💬 VIVA / DISCUSSION TRANSITION:\n"
+                + "State clearly that the history-taking phase is now complete and we are moving to the clinical discussion. "
+                + "Then, ask 1 or 2 clinical follow-up questions about this case (e.g., differentials, bedside/lab investigations, or physical signs expected) to initiate the viva."
             )
             examiner_contents = [
                 types.Content(
@@ -685,9 +687,9 @@ if prompt := st.chat_input("Type here, or click mic to speak Sinhala/Singlish/En
                 EXAMINER_INSTRUCTION_BASE
                 + "You have already provided your initial critique. The student is now answering your viva questions "
                 + "(differentials, expected physical signs, investigations, management). "
-                + "Evaluate their reasoning using the 'Encouraging Clinical Mentor' persona. "
-                + "Be warm, highly encouraging, and supportive. Frame incorrect answers as valuable learning opportunities, "
-                + "gently guide them towards the correct clinical reasoning, and keep their confidence high."
+                + "Evaluate their reasoning using the encouraging, fair Clinical Mentor persona. "
+                + "Strictly address the student as 'you' (do NOT use 'Doctor', 'Student', or 'Candidate'). "
+                + "Be supportive, guide them towards the correct reasoning when they make mistakes, and ask 1-2 follow-up clinical questions to advance the viva."
             )
             formatted = [
                 types.Content(
