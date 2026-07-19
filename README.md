@@ -8,7 +8,7 @@ The simulator uses **Streamlit** for the UI and the **Google GenAI SDK** (`gemin
 
 ## 🚀 Key Features
 
-### 🎙️ Hands-Free Voice-to-Text Input (New!)
+### 🎙️ Hands-Free Voice-to-Text Input 
 - **Native Browser Integration:** Uses the browser's native Web Speech API embedded directly inside the chat input box.
 - **Multilingual Recognition:** Speak in **Sinhala**, **Singlish**, or **English**. The browser instantly transcribes your speech.
 - **Auto-Submit:** When you finish speaking, the simulator automatically submits your question to the patient. No need to click "Send" or press Enter!
